@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/componentSystems/ControlSystem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/componentSystems/ControlSystem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as THREE from 'three';
+
+import { MRSystem } from 'mrjs/core/MRSystem';
+import { MRHand } from 'mrjs/datatypes/Hand';
+
+import { mrjsUtils } from 'mrjs';
+
+/**
+ * @class ControlSystem
+ * @classdesc This system supports interaction event information including mouse and controller interfacing.
+ * @augments MRSystem
+ */
+export class ControlSystem extends MRSystem {
+    /**
+     * ControlSystem's Default constructor that sets up the app's mouse information along with any relevant physics and cursor information.
+     */
+    constructor() {
+        super(false);
+        this.leftHand = new MRHand('left', this.app);
+        this.rightHand = new MRHand('right', this.app);
+
+        this.pointerPosition = new THREE.Vector3();
+        this.ray = new mrjsUtils.Physics.RAPIER.Ray({ x: 1.0, y: 2.0, z: 3.0 }, { x: 0.0, y: 1.0, z: 0.0 });
+        this.hit;
+
+        this.restPosition = new THREE.Vector3(1000, 1000, 1000);
+        this.hitPosition = new THREE.Vector3();
+        this.timer;
+
+        const rigidBodyDesc = mrjsUtils.Physics.RAPIER.RigidBodyDesc.kinematicPositionBased();
+        const colDesc = mrjsUtils.Physics.RAPIER.ColliderDesc.ball(0.0001);
+
+        this.cursorClick = this.app.physicsWorld.createRigidBody(rigidBodyDesc);
+        this.cursorHover = this.app.physicsWorld.createRigidBody(rigidBodyDesc);
+
+        this.cursorHover.collider = this.app.physicsWorld.createCollider(colDesc, this.cursorHover);
+        this.cursorClick.collider = this.app.physicsWorld.createCollider(colDesc, this.cursorClick);
+
+        this.cursorClick.setTranslation({ ...this.restPosition }, true);
+        this.cursorHover.setTranslation({ ...this.restPosition }, true);
+
+        mrjsUtils.Physics.INPUT_COLLIDER_HANDLE_NAMES[this.cursorClick.collider.handle] = 'cursor';
+        mrjsUtils.Physics.INPUT_COLLIDER_HANDLE_NAMES[this.cursorHover.collider.handle] = 'cursor-hover';
+
+        this.cursor = this.cursorHover;
+
+        this.app.renderer.domElement.addEventListener('click', this.onClick);
+        this.app.renderer.domElement.addEventListener('mousedown', this.onMouseDown);
+        this.app.renderer.domElement.addEventListener('mouseup', this.onMouseUp);
+        this.app.renderer.domElement.addEventListener('mousemove', this.mouseOver);
+
+        this.app.renderer.domElement.addEventListener('touchstart', this.onMouseDown);
+        this.app.renderer.domElement.addEventListener('touchend', this.onMouseUp);
+        this.app.renderer.domElement.addEventListener('touchmove', this.mouseOver);
+    }
+
+    /**
+     * The generic system update call.
+     * Updates the meshes and states for both the left and right hand visuals.
+     * @param {number} deltaTime - given timestep to be used for any feature changes
+     * @param {object} frame - given frame information to be used for any feature changes
+     */
+    update(deltaTime, frame) {
+        this.leftHand.setMesh();
+        this.rightHand.setMesh();
+
+        this.leftHand.update();
+        this.rightHand.update();
+    }
+
+    /************ Interaction Events ************/
+
+    /**
+     * Handles the mouse over event
+     * @param {event} event - the mouse over event
+     */
+    mouseOverImpl(event) {
+        event.stopPropagation();
+
+        this.hit = this.pixelRayCast(event);
+
+        if (this.hit != null) {
+            this.hitPosition.copy(this.ray.pointAt(this.hit.toi));
+            this.cursor.setTranslation({ ...this.hitPosition }, true);
+        }
+    }
+    mouseOver = (event) => {
+        return this.mouseOverImpl(event);
+    };
+
+    /**
+     * Handles the mouse down event
+     * @param {event} event - the mouse down event
+     */
+    onMouseDownImpl(event) {
+        event.stopPropagation();
+        this.removeCursor();
+
+        this.cursor = this.cursorClick;
+
+        this.hit = this.pixelRayCast(event);
+
+        if (this.hit != null) {
+            this.hitPosition.copy(this.ray.pointAt(this.hit.toi));
+            this.cursor.setTranslation({ ...this.hitPosition }, true);
+        }
+    }
+    onMouseDown = (event) => {
+        return this.onMouseDownImpl(event);
+    };
+
+    /**
+     * Handles the mouse up event
+     * @param {event} event - the mouse up event
+     */
+    onMouseUpImpl(event) {
+        event.stopPropagation();
+        this.removeCursor();
+        this.cursor = this.cursorHover;
+    }
+    onMouseUp = (event) => {
+        return this.onMouseUpImpl(event);
+    };
+
+    /**
+     * Handles the removeCursor callback.
+     */
+    removeCursorImpl() {
+        this.cursorHover.setTranslation({ ...this.restPosition }, true);
+        this.cursorClick.setTranslation({ ...this.restPosition }, true);
+    }
+    removeCursor = () => {
+        return this.removeCursorImpl();
+    };
+
+    /************ Tools &amp;&amp; Helpers ************/
+
+    /**
+     * Raycast into the scene using the information from the event that called it.
+     * @param {object} event - the event being handled
+     * @returns {object} - collision item for what the ray hit in the 3d scene.
+     */
+    pixelRayCast(event) {
+        let x = 0;
+        let y = 0;
+        if (event.type.includes('touch')) {
+            x = event.touches[0].clientX;
+            y = event.touches[0].clientY;
+        } else {
+            x = event.clientX;
+            y = event.clientY;
+        }
+
+        if (this.app.user instanceof THREE.OrthographicCamera) {
+            this.pointerPosition.set((x / window.innerWidth) * 2 - 1, -(y / window.innerHeight) * 2 + 1, -1); // z = - 1 important!
+            this.pointerPosition.unproject(this.app.user);
+            const direction = new THREE.Vector3(0, 0, -1);
+            direction.transformDirection(this.app.user.matrixWorld);
+
+            this.ray.origin = { ...this.pointerPosition };
+            this.ray.dir = { ...direction };
+        } else {
+            this.pointerPosition.set((x / window.innerWidth) * 2 - 1, -(y / window.innerHeight) * 2 + 1, 0.5);
+            this.pointerPosition.unproject(this.app.user);
+            this.pointerPosition.sub(this.app.user.position).normalize();
+            this.ray.origin = { ...this.app.user.position };
+            this.ray.dir = { ...this.pointerPosition };
+        }
+
+        return this.app.physicsWorld.castRay(this.ray, 100, true, null, null, null, this.cursor);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mrjs.html">mrjs</a></li><li><a href="module-mrjsUtils.html">mrjsUtils</a></li></ul><h3>Classes</h3><ul><li><a href="Button.html">Button</a></li><li><a href="Button_MRDivEntity.html">MRDivEntity</a></li><li><a href="Button_MREntity.html">MREntity</a></li><li><a href="ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingGeometry_ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_MRSystem.html">MRSystem</a></li><li><a href="ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_MRSystem.html">MRSystem</a></li><li><a href="Image.html">Image</a></li><li><a href="Image_Image.html">Image</a></li><li><a href="Image_MRDivEntity.html">MRDivEntity</a></li><li><a href="Image_MREntity.html">MREntity</a></li><li><a href="Instancing%2520System.html">Instancing System</a></li><li><a href="Instancing%2520System_MRSystem.html">MRSystem</a></li><li><a href="InstancingSystem.html">InstancingSystem</a></li><li><a href="Layout%2520System.html">Layout System</a></li><li><a href="Layout%2520System_MRSystem.html">MRSystem</a></li><li><a href="LayoutSystem_LayoutSystem.html">LayoutSystem</a></li><li><a href="Light.html">Light</a></li><li><a href="Light_MRElement.html">MRElement</a></li><li><a href="Light_MREntity.html">MREntity</a></li><li><a href="MRApp.html">MRApp</a></li><li><a href="MRApp_MRApp.html">MRApp</a></li><li><a href="MRApp_MRElement.html">MRElement</a></li><li><a href="MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MREntity.html">MREntity</a></li><li><a href="MRElement.html">MRElement</a></li><li><a href="MRElement_MRElement.html">MRElement</a></li><li><a href="MREntity.html">MREntity</a></li><li><a href="MREntity_MRElement.html">MRElement</a></li><li><a href="MREntity_MREntity.html">MREntity</a></li><li><a href="MRHand.html">MRHand</a></li><li><a href="MRHand_MRHand.html">MRHand</a></li><li><a href="MRSystem.html">MRSystem</a></li><li><a href="MRSystem_MRSystem.html">MRSystem</a></li><li><a href="MRTextArea.html">MRTextArea</a></li><li><a href="MRTextArea_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextArea_MREntity.html">MREntity</a></li><li><a href="MRTextArea_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextEntity_MREntity.html">MREntity</a></li><li><a href="MRTextEntity_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextField.html">MRTextField</a></li><li><a href="MRTextField_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextField_MREntity.html">MREntity</a></li><li><a href="MRTextField_MRTextEntity.html">MRTextEntity</a></li><li><a href="Model.html">Model</a></li><li><a href="Model_MRElement.html">MRElement</a></li><li><a href="Model_MREntity.html">MREntity</a></li><li><a href="Model_Model.html">Model</a></li><li><a href="Panel.html">Panel</a></li><li><a href="Panel_MRDivEntity.html">MRDivEntity</a></li><li><a href="Panel_MREntity.html">MREntity</a></li><li><a href="Panel_Panel.html">Panel</a></li><li><a href="PhysicsSystem.html">PhysicsSystem</a></li><li><a href="PhysicsSystem_MRSystem.html">MRSystem</a></li><li><a href="PhysicsSystem_PhysicsSystem.html">PhysicsSystem</a></li><li><a href="SkyBox.html">SkyBox</a></li><li><a href="SkyBox_MRElement.html">MRElement</a></li><li><a href="SkyBox_MREntity.html">MREntity</a></li><li><a href="StyleSystem.html">StyleSystem</a></li><li><a href="StyleSystem_MRSystem.html">MRSystem</a></li><li><a href="StyleSystem_StyleSystem.html">StyleSystem</a></li><li><a href="Surface.html">Surface</a></li><li><a href="Surface_MRElement.html">MRElement</a></li><li><a href="Surface_MREntity.html">MREntity</a></li><li><a href="Surface_Surface.html">Surface</a></li><li><a href="SurfaceSystem.html">SurfaceSystem</a></li><li><a href="SurfaceSystem_MRSystem.html">MRSystem</a></li><li><a href="SurfaceSystem_SurfaceSystem.html">SurfaceSystem</a></li><li><a href="TextArea_TextArea.html">TextArea</a></li><li><a href="TextField_TextField.html">TextField</a></li><li><a href="TextSystem.html">TextSystem</a></li><li><a href="TextSystem_MRSystem.html">MRSystem</a></li><li><a href="TextSystem_TextSystem.html">TextSystem</a></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#UIPlane">UIPlane</a></li><li><a href="global.html#computeBoundingSphere">computeBoundingSphere</a></li><li><a href="global.html#connected">connected</a></li><li><a href="global.html#jsonToString">jsonToString</a></li><li><a href="global.html#loadDAE">loadDAE</a></li><li><a href="global.html#loadFBX">loadFBX</a></li><li><a href="global.html#loadGLTF">loadGLTF</a></li><li><a href="global.html#loadModel">loadModel</a></li><li><a href="global.html#loadSTL">loadSTL</a></li><li><a href="global.html#loadUSDZ">loadUSDZ</a></li><li><a href="global.html#mobileCheckFunction">mobileCheckFunction</a></li><li><a href="global.html#mutatedImpl">mutatedImpl</a></li><li><a href="global.html#onHoverImpl">onHoverImpl</a></li><li><a href="global.html#pxToThree">pxToThree</a></li><li><a href="global.html#radToDeg">radToDeg</a></li><li><a href="global.html#roundTo">roundTo</a></li><li><a href="global.html#roundVectorTo">roundVectorTo</a></li><li><a href="global.html#stringToDegVector">stringToDegVector</a></li><li><a href="global.html#stringToDimensionValue">stringToDimensionValue</a></li><li><a href="global.html#stringToJson">stringToJson</a></li><li><a href="global.html#stringToVector">stringToVector</a></li><li><a href="global.html#threeToPx">threeToPx</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Dec 14 2023 02:43:07 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

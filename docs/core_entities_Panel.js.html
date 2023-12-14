@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/entities/Panel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/entities/Panel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as THREE from 'three';
+
+import { MREntity } from 'mrjs/core/MREntity';
+import { MRDivEntity } from 'mrjs/core/MRDivEntity';
+import { Surface } from 'mrjs/core/entities/Surface';
+
+import { mrjsUtils } from 'mrjs';
+
+import { ClippingGeometry } from 'mrjs/datatypes/ClippingGeometry';
+
+/**
+ * @class Panel
+ * @classdesc The main panel entity DOM used for webpages and UI elements in 3D space. `mr-panel`
+ * @augments MRDivEntity
+ */
+export class Panel extends MRDivEntity {
+    /**
+     * Calculates the height of the Entity. If in Mixed Reality, adjusts the value appropriately.
+     * @returns {number} - the resolved height
+     */
+    get height() {
+        if (global.inXR) {
+            this.windowVerticalScale = this.parentElement.windowVerticalScale ?? global.XRScale;
+            return this.windowVerticalScale;
+        }
+        return global.viewPortHeight;
+    }
+
+    /**
+     * Constructor for the main Panel. Sets up all the relevant object3D and window information. Includes information necessary for proper scrolling usage.
+     */
+    constructor() {
+        super();
+        this.shuttle = new THREE.Group(); // will shift based on bounding box width
+        this.object3D.userData.bbox = new THREE.Box3();
+        this.object3D.userData.size = new THREE.Vector3();
+        this.object3D.add(this.shuttle);
+
+        this.windowVerticalScale = 1;
+        this.windowHorizontalScale = 1;
+
+        this.currentPosition = new THREE.Vector3();
+        this.prevPosition = new THREE.Vector3();
+        this.deltaVector = new THREE.Vector3();
+        this.delta = 0;
+
+        this.momentumTimeout;
+    }
+
+    /**
+     * Callback function of MREntity - handles setting up this Panel once it is connected to run as an entity component.
+     * Relevant tasks include setting up clipping and setting up for all necessary dispatchEvent connections including mutations and scrolling.
+     */
+    connected() {
+        this.clipping = new ClippingGeometry(new THREE.BoxGeometry(this.width, this.height, 0.3));
+        window.addEventListener('load', (event) => {
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+        });
+
+        window.addEventListener('resize', (event) => {
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+        });
+
+        this.parentElement.addEventListener('surface-placed', (event) => {
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+        });
+
+        this.parentElement.addEventListener('surface-removed', (event) => {
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+        });
+
+        document.addEventListener('enterXR', (event) => {
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+            if (!(this.parentElement instanceof Surface)) {
+                this.object3D.position.setZ(-0.4);
+            }
+        });
+
+        document.addEventListener('exitXR', (event) => {
+            console.log('exit');
+            this.dispatchEvent(new CustomEvent('panel-mutated', { bubbles: true }));
+            if (!(this.parentElement instanceof Surface)) {
+                this.object3D.position.setZ(0);
+            }
+        });
+
+        this.addEventListener('panel-mutated', (event) => {
+            this.clipping.geometry.copy(new THREE.BoxGeometry(this.width, this.height, 0.3));
+        });
+
+        document.addEventListener('wheel', (event) => {
+            this.onScroll(event);
+        });
+    }
+
+    /**
+     * Adding an entity as a sub-object of this entity.
+     * @param {MREntity} entity - the entity to be added.
+     */
+    add(entity) {
+        this.shuttle.add(entity.object3D);
+    }
+
+    /**
+     * Remove an entity as a sub-object of this entity.
+     * @param {MREntity} entity - the entity to be removed.
+     */
+    remove(entity) {
+        this.shuttle.remove(entity.object3D);
+    }
+
+    /**
+     * Handles what should happen when a touch event is called. Updates items appropriately for scrolling on the panel.
+     * Triggers to use the browser's own scrolling without a need to fake the scrolling itself.
+     * @param {object} event - the touch event
+     */
+    onTouchImpl(event) {
+        if (!global.inXR) {
+            return;
+        }
+        if (event.type == 'touch-end') {
+            this.prevPosition.set(0, 0, 0);
+            return;
+        }
+        event.stopPropagation();
+        this.currentPosition.copy(event.detail.worldPosition);
+        if (this.prevPosition.y != 0) {
+            this.deltaVector.subVectors(this.currentPosition, this.prevPosition);
+        }
+        this.prevPosition.copy(this.currentPosition);
+
+        this.delta = this.deltaVector.y * 7;
+
+        if (this.delta == 0) {
+            return;
+        }
+
+        this.momentumScroll(mrjsUtils.Css.threeToPx(this.delta), 3000);
+    }
+    onTouch = (event) => {
+        return this.onTouchImpl(event);
+    };
+
+    /**
+     * Helper function for the onTouch event function. Handles properly adjusting scroll for some momentum for a more natural feel.
+     * @param {number} distance - the distance left to scroll
+     * @param {number} duration - the amount of time to do the scroll distance allowing for some movement instead of instant displacement.
+     */
+    momentumScrollImpl(distance, duration) {
+        let start = null;
+        let remainingDistance = distance;
+        clearTimeout(this.momentumTimeout);
+
+        /**
+         * Internal function - used to step through the remaining scroll distance iteratively.
+         */
+        function step() {
+            if (start === null) {
+                start = new Date().getTime();
+            }
+
+            const currentTime = new Date().getTime();
+            const timeElapsed = currentTime - start;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const easing = 1 - Math.pow(1 - progress, 3); // cubic easing out
+
+            const scrollDistance = remainingDistance * easing;
+            window.scrollBy(0, scrollDistance);
+
+            remainingDistance -= scrollDistance;
+
+            if (timeElapsed &lt; duration) {
+                this.momentumTimeout = setTimeout(step, 10); // 10ms for the next step
+            }
+        }
+
+        this.momentumTimeout = setTimeout(step, 10); // 10ms for the next step
+    }
+    momentumScroll = (distance, duration) => {
+        return this.momentumScrollImpl(distance, duration);
+    };
+
+    /**
+     * Handles what should happen when a scroll event is called. Updates items appropriately for scrolling on the panel.
+     * @param {object} event - the scroll event
+     */
+    onScroll = (event) => {};
+}
+
+customElements.get('mr-panel') || customElements.define('mr-panel', Panel);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mrjs.html">mrjs</a></li><li><a href="module-mrjsUtils.html">mrjsUtils</a></li></ul><h3>Classes</h3><ul><li><a href="Button.html">Button</a></li><li><a href="Button_MRDivEntity.html">MRDivEntity</a></li><li><a href="Button_MREntity.html">MREntity</a></li><li><a href="ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingGeometry_ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_MRSystem.html">MRSystem</a></li><li><a href="ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_MRSystem.html">MRSystem</a></li><li><a href="Image.html">Image</a></li><li><a href="Image_Image.html">Image</a></li><li><a href="Image_MRDivEntity.html">MRDivEntity</a></li><li><a href="Image_MREntity.html">MREntity</a></li><li><a href="Instancing%2520System.html">Instancing System</a></li><li><a href="Instancing%2520System_MRSystem.html">MRSystem</a></li><li><a href="InstancingSystem.html">InstancingSystem</a></li><li><a href="Layout%2520System.html">Layout System</a></li><li><a href="Layout%2520System_MRSystem.html">MRSystem</a></li><li><a href="LayoutSystem_LayoutSystem.html">LayoutSystem</a></li><li><a href="Light.html">Light</a></li><li><a href="Light_MRElement.html">MRElement</a></li><li><a href="Light_MREntity.html">MREntity</a></li><li><a href="MRApp.html">MRApp</a></li><li><a href="MRApp_MRApp.html">MRApp</a></li><li><a href="MRApp_MRElement.html">MRElement</a></li><li><a href="MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MREntity.html">MREntity</a></li><li><a href="MRElement.html">MRElement</a></li><li><a href="MRElement_MRElement.html">MRElement</a></li><li><a href="MREntity.html">MREntity</a></li><li><a href="MREntity_MRElement.html">MRElement</a></li><li><a href="MREntity_MREntity.html">MREntity</a></li><li><a href="MRHand.html">MRHand</a></li><li><a href="MRHand_MRHand.html">MRHand</a></li><li><a href="MRSystem.html">MRSystem</a></li><li><a href="MRSystem_MRSystem.html">MRSystem</a></li><li><a href="MRTextArea.html">MRTextArea</a></li><li><a href="MRTextArea_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextArea_MREntity.html">MREntity</a></li><li><a href="MRTextArea_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextEntity_MREntity.html">MREntity</a></li><li><a href="MRTextEntity_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextField.html">MRTextField</a></li><li><a href="MRTextField_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextField_MREntity.html">MREntity</a></li><li><a href="MRTextField_MRTextEntity.html">MRTextEntity</a></li><li><a href="Model.html">Model</a></li><li><a href="Model_MRElement.html">MRElement</a></li><li><a href="Model_MREntity.html">MREntity</a></li><li><a href="Model_Model.html">Model</a></li><li><a href="Panel.html">Panel</a></li><li><a href="Panel_MRDivEntity.html">MRDivEntity</a></li><li><a href="Panel_MREntity.html">MREntity</a></li><li><a href="Panel_Panel.html">Panel</a></li><li><a href="PhysicsSystem.html">PhysicsSystem</a></li><li><a href="PhysicsSystem_MRSystem.html">MRSystem</a></li><li><a href="PhysicsSystem_PhysicsSystem.html">PhysicsSystem</a></li><li><a href="SkyBox.html">SkyBox</a></li><li><a href="SkyBox_MRElement.html">MRElement</a></li><li><a href="SkyBox_MREntity.html">MREntity</a></li><li><a href="StyleSystem.html">StyleSystem</a></li><li><a href="StyleSystem_MRSystem.html">MRSystem</a></li><li><a href="StyleSystem_StyleSystem.html">StyleSystem</a></li><li><a href="Surface.html">Surface</a></li><li><a href="Surface_MRElement.html">MRElement</a></li><li><a href="Surface_MREntity.html">MREntity</a></li><li><a href="Surface_Surface.html">Surface</a></li><li><a href="SurfaceSystem.html">SurfaceSystem</a></li><li><a href="SurfaceSystem_MRSystem.html">MRSystem</a></li><li><a href="SurfaceSystem_SurfaceSystem.html">SurfaceSystem</a></li><li><a href="TextArea_TextArea.html">TextArea</a></li><li><a href="TextField_TextField.html">TextField</a></li><li><a href="TextSystem.html">TextSystem</a></li><li><a href="TextSystem_MRSystem.html">MRSystem</a></li><li><a href="TextSystem_TextSystem.html">TextSystem</a></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#UIPlane">UIPlane</a></li><li><a href="global.html#computeBoundingSphere">computeBoundingSphere</a></li><li><a href="global.html#connected">connected</a></li><li><a href="global.html#jsonToString">jsonToString</a></li><li><a href="global.html#loadDAE">loadDAE</a></li><li><a href="global.html#loadFBX">loadFBX</a></li><li><a href="global.html#loadGLTF">loadGLTF</a></li><li><a href="global.html#loadModel">loadModel</a></li><li><a href="global.html#loadSTL">loadSTL</a></li><li><a href="global.html#loadUSDZ">loadUSDZ</a></li><li><a href="global.html#mobileCheckFunction">mobileCheckFunction</a></li><li><a href="global.html#mutatedImpl">mutatedImpl</a></li><li><a href="global.html#onHoverImpl">onHoverImpl</a></li><li><a href="global.html#pxToThree">pxToThree</a></li><li><a href="global.html#radToDeg">radToDeg</a></li><li><a href="global.html#roundTo">roundTo</a></li><li><a href="global.html#roundVectorTo">roundVectorTo</a></li><li><a href="global.html#stringToDegVector">stringToDegVector</a></li><li><a href="global.html#stringToDimensionValue">stringToDimensionValue</a></li><li><a href="global.html#stringToJson">stringToJson</a></li><li><a href="global.html#stringToVector">stringToVector</a></li><li><a href="global.html#threeToPx">threeToPx</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Dec 14 2023 02:43:07 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

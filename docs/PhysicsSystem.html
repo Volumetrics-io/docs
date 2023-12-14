@@ -1,0 +1,3170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: PhysicsSystem</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: PhysicsSystem</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>PhysicsSystem<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">The physics system functions differently from other systems,
+Rather than attaching components, physical properties such as
+shape, body, mass, etc are definied as attributes.
+if shape and body are not defined, they default to the geometry
+of the entity, if there is no geometry, there is no physics defined
+on the entity.
+
+Alternatively, you can also expressly attach a comp-physics
+attribute for more detailed control.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="PhysicsSystem"><span class="type-signature"></span>new PhysicsSystem<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="MRSystem.html">MRSystem</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="PhysicsSystem_MRSystem.html">MRSystem</a></dt>
+            <dd></dd>
+        
+            <dt><a href="PhysicsSystem_PhysicsSystem.html">PhysicsSystem</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="__update"><span class="type-signature"></span>__update<span class="signature">(deltaTime, frame)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The actual system update call.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>deltaTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">given timestep to be used for any feature changes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>frame</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">given frame information to be used for any feature changes</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#__update">MRSystem#__update</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="attachedComponent"><span class="type-signature"></span>attachedComponent<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Called when the entity component is initialized
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being attached/initialized.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#attachedComponent">MRSystem#attachedComponent</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="detachedComponent"><span class="type-signature"></span>detachedComponent<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Called when the entity component is removed
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity component being removed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#detachedComponent">MRSystem#detachedComponent</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line102">line 102</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hoverEndImpl"><span class="type-signature"></span>hoverEndImpl<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the end of hovering over/around a specific entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the current entity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line255">line 255</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hoverStartImpl"><span class="type-signature"></span>hoverStartImpl<span class="signature">(collider1, collider2, entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the start of hovering over/around a specific entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collider1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the first collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>collider2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the second collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the current entity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line231">line 231</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initColliderDesc"><span class="type-signature"></span>initColliderDesc<span class="signature">(physicsData)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes a collider based on the physics data.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>physicsData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">data needed to be used to setup the collider interaction</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line324">line 324</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - the Rapier physics collider object
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initPhysicsBody"><span class="type-signature"></span>initPhysicsBody<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes the rigid body used by the physics part of the entity
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being updated</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line279">line 279</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onAttachImpl"><span class="type-signature"></span>onAttachImpl<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the component and registry aspect of the event when an entity component attaches to this system.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the attach event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#onAttachImpl">MRSystem#onAttachImpl</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line108">line 108</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onContactEndImpl"><span class="type-signature"></span>onContactEndImpl<span class="signature">(handle1, handle2)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the end of collisions between two different colliders.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>handle1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the first collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handle2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the second collider</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line143">line 143</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onContactStartImpl"><span class="type-signature"></span>onContactStartImpl<span class="signature">(handle1, handle2)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the start of collisions between two different colliders.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>handle1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the first collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handle2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the second collider</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line114">line 114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onDetachImpl"><span class="type-signature"></span>onDetachImpl<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the component and registry aspect of the even when an entity component detaches from this system.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the detach event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#onDetachImpl">MRSystem#onDetachImpl</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onNewEntity"><span class="type-signature"></span>onNewEntity<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    When a new entity is created, adds it to the physics registry and initializes the physics aspects of the entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being set up</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="MRSystem.html#onNewEntity">MRSystem#onNewEntity</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line270">line 270</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onUpdateImpl"><span class="type-signature"></span>onUpdateImpl<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the component and registry update of the even when an entity component needs to change.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the update event</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#onUpdateImpl">MRSystem#onUpdateImpl</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="touchEndImpl"><span class="type-signature"></span>touchEndImpl<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the end of touch for the current entity
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the current entity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line208">line 208</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="touchStartImpl"><span class="type-signature"></span>touchStartImpl<span class="signature">(collider1, collider2, entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the start of touch between two different colliders and the current entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collider1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the first collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>collider2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the second collider</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the current entity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(deltaTime, frame)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The generic system update call.
+Based on the captured physics events for the frame, handles all items appropriately.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>deltaTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">given timestep to be used for any feature changes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>frame</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">given frame information to be used for any feature changes</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="MRSystem.html#update">MRSystem#update</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateBody"><span class="type-signature"></span>updateBody<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the rigid body used by the physics part of the entity
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being updated</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line305">line 305</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateCollider"><span class="type-signature"></span>updateCollider<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the collider used by the entity based on whether it's being used as a UI element, the main box element, etc.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being updated</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line338">line 338</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateDebugRenderer"><span class="type-signature"></span>updateDebugRenderer<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the debug renderer to either be on or off based on the 'this.debug' variable.
+Handles the drawing of the visual lines.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_componentSystems_PhysicsSystem.js.html">core/componentSystems/PhysicsSystem.js</a>, <a href="core_componentSystems_PhysicsSystem.js.html#line353">line 353</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updatedComponent"><span class="type-signature"></span>updatedComponent<span class="signature">(entity, oldData)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Called when a specific entity component is being updated
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="MREntity.html">MREntity</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the entity being updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>oldData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRSystem.html#updatedComponent">MRSystem#updatedComponent</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_MRSystem.js.html">core/MRSystem.js</a>, <a href="core_MRSystem.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mrjs.html">mrjs</a></li><li><a href="module-mrjsUtils.html">mrjsUtils</a></li></ul><h3>Classes</h3><ul><li><a href="Button.html">Button</a></li><li><a href="Button_MRDivEntity.html">MRDivEntity</a></li><li><a href="Button_MREntity.html">MREntity</a></li><li><a href="ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingGeometry_ClippingGeometry.html">ClippingGeometry</a></li><li><a href="ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_ClippingSystem.html">ClippingSystem</a></li><li><a href="ClippingSystem_MRSystem.html">MRSystem</a></li><li><a href="ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_ControlSystem.html">ControlSystem</a></li><li><a href="ControlSystem_MRSystem.html">MRSystem</a></li><li><a href="Image.html">Image</a></li><li><a href="Image_Image.html">Image</a></li><li><a href="Image_MRDivEntity.html">MRDivEntity</a></li><li><a href="Image_MREntity.html">MREntity</a></li><li><a href="Instancing%2520System.html">Instancing System</a></li><li><a href="Instancing%2520System_MRSystem.html">MRSystem</a></li><li><a href="InstancingSystem.html">InstancingSystem</a></li><li><a href="Layout%2520System.html">Layout System</a></li><li><a href="Layout%2520System_MRSystem.html">MRSystem</a></li><li><a href="LayoutSystem_LayoutSystem.html">LayoutSystem</a></li><li><a href="Light.html">Light</a></li><li><a href="Light_MRElement.html">MRElement</a></li><li><a href="Light_MREntity.html">MREntity</a></li><li><a href="MRApp.html">MRApp</a></li><li><a href="MRApp_MRApp.html">MRApp</a></li><li><a href="MRApp_MRElement.html">MRElement</a></li><li><a href="MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRDivEntity_MREntity.html">MREntity</a></li><li><a href="MRElement.html">MRElement</a></li><li><a href="MRElement_MRElement.html">MRElement</a></li><li><a href="MREntity.html">MREntity</a></li><li><a href="MREntity_MRElement.html">MRElement</a></li><li><a href="MREntity_MREntity.html">MREntity</a></li><li><a href="MRHand.html">MRHand</a></li><li><a href="MRHand_MRHand.html">MRHand</a></li><li><a href="MRSystem.html">MRSystem</a></li><li><a href="MRSystem_MRSystem.html">MRSystem</a></li><li><a href="MRTextArea.html">MRTextArea</a></li><li><a href="MRTextArea_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextArea_MREntity.html">MREntity</a></li><li><a href="MRTextArea_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextEntity_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextEntity_MREntity.html">MREntity</a></li><li><a href="MRTextEntity_MRTextEntity.html">MRTextEntity</a></li><li><a href="MRTextField.html">MRTextField</a></li><li><a href="MRTextField_MRDivEntity.html">MRDivEntity</a></li><li><a href="MRTextField_MREntity.html">MREntity</a></li><li><a href="MRTextField_MRTextEntity.html">MRTextEntity</a></li><li><a href="Model.html">Model</a></li><li><a href="Model_MRElement.html">MRElement</a></li><li><a href="Model_MREntity.html">MREntity</a></li><li><a href="Model_Model.html">Model</a></li><li><a href="Panel.html">Panel</a></li><li><a href="Panel_MRDivEntity.html">MRDivEntity</a></li><li><a href="Panel_MREntity.html">MREntity</a></li><li><a href="Panel_Panel.html">Panel</a></li><li><a href="PhysicsSystem.html">PhysicsSystem</a></li><li><a href="PhysicsSystem_MRSystem.html">MRSystem</a></li><li><a href="PhysicsSystem_PhysicsSystem.html">PhysicsSystem</a></li><li><a href="SkyBox.html">SkyBox</a></li><li><a href="SkyBox_MRElement.html">MRElement</a></li><li><a href="SkyBox_MREntity.html">MREntity</a></li><li><a href="StyleSystem.html">StyleSystem</a></li><li><a href="StyleSystem_MRSystem.html">MRSystem</a></li><li><a href="StyleSystem_StyleSystem.html">StyleSystem</a></li><li><a href="Surface.html">Surface</a></li><li><a href="Surface_MRElement.html">MRElement</a></li><li><a href="Surface_MREntity.html">MREntity</a></li><li><a href="Surface_Surface.html">Surface</a></li><li><a href="SurfaceSystem.html">SurfaceSystem</a></li><li><a href="SurfaceSystem_MRSystem.html">MRSystem</a></li><li><a href="SurfaceSystem_SurfaceSystem.html">SurfaceSystem</a></li><li><a href="TextArea_TextArea.html">TextArea</a></li><li><a href="TextField_TextField.html">TextField</a></li><li><a href="TextSystem.html">TextSystem</a></li><li><a href="TextSystem_MRSystem.html">MRSystem</a></li><li><a href="TextSystem_TextSystem.html">TextSystem</a></li><li><a href="module.exports_module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#UIPlane">UIPlane</a></li><li><a href="global.html#computeBoundingSphere">computeBoundingSphere</a></li><li><a href="global.html#connected">connected</a></li><li><a href="global.html#jsonToString">jsonToString</a></li><li><a href="global.html#loadDAE">loadDAE</a></li><li><a href="global.html#loadFBX">loadFBX</a></li><li><a href="global.html#loadGLTF">loadGLTF</a></li><li><a href="global.html#loadModel">loadModel</a></li><li><a href="global.html#loadSTL">loadSTL</a></li><li><a href="global.html#loadUSDZ">loadUSDZ</a></li><li><a href="global.html#mobileCheckFunction">mobileCheckFunction</a></li><li><a href="global.html#mutatedImpl">mutatedImpl</a></li><li><a href="global.html#onHoverImpl">onHoverImpl</a></li><li><a href="global.html#pxToThree">pxToThree</a></li><li><a href="global.html#radToDeg">radToDeg</a></li><li><a href="global.html#roundTo">roundTo</a></li><li><a href="global.html#roundVectorTo">roundVectorTo</a></li><li><a href="global.html#stringToDegVector">stringToDegVector</a></li><li><a href="global.html#stringToDimensionValue">stringToDimensionValue</a></li><li><a href="global.html#stringToJson">stringToJson</a></li><li><a href="global.html#stringToVector">stringToVector</a></li><li><a href="global.html#threeToPx">threeToPx</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Dec 14 2023 02:43:07 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
