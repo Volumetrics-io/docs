@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: datatypes/ClippingGeometry.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,44 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: datatypes/ClippingGeometry.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// NOTE: There is probably a better way to do this
 
+// TODO - separate this out so it's only needed within the Clipping Geometry System. This is not useful being separate from that
+// must do that before deletion
 
-    <h3> </h3>
+/**
+ * @class ClippingGeometry
+ * @classdesc Geometry used in the clipping plane step. Separated out for clarity in the calculations.
+ */
+export class ClippingGeometry {
+    planes = [];
 
+    planeIDs = [];
 
+    intersection = false;
 
+    global = false;
 
-
-
-
-
-
-
-    
-
-
-
-
-
+    /**
+     * Constructor for the clipping geometry class. Sets the internal geometry object to the geometry that is passed through.
+     * @param {object} geometry - The geometry to be captured internally by `this.geometry`.
+     */
+    constructor(geometry) {
+        this.geometry = geometry;
+    }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

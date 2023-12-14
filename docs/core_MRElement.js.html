@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: core/MRElement.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,45 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: core/MRElement.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class MRElement
+ * @classdesc The first step in MR.js extending an HTMLElement. Used as a base for both `mr-app` and `mr-entity`.
+ * @augments HTMLElement
+ */
+export class MRElement extends HTMLElement {
+    /**
+     * Constructs the basic information needed to separate an `MRElement` from an `HTMLElement`.
+     */
+    constructor() {
+        super();
+        this.environment = null;
+        this.observer = null;
+    }
 
+    /**
+     * Adding an entity as a sub-object of this entity.
+     * @param {object} entity - the entity to be added.
+     */
+    add(entity) {}
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    /**
+     * Removing an entity as a sub-object of this entity.
+     * @param {object} entity - the entity to be removed.
+     */
+    remove(entity) {}
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
