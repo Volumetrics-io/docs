@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: datatypes/ClippingGeometry.js | mrjs Docs</title>
+    <title>Source: core/entities/MRHyperlink.js | mrjs Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -46,33 +46,41 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @class ClippingGeometry
- * @classdesc Geometry used in the clipping plane step. Separated out for clarity in the calculations.
+            <pre class="prettyprint source linenums"><code>import { MRTextEntity } from '../MRTextEntity';
+
+/**
+ * @class A
+ * @classdesc 3D representation of a hyperlink. `mr-a`
+ * @augments MRTextEntity
  */
-export class ClippingGeometry {
-    planes = [];
-
-    planeIDs = [];
-
-    intersection = false;
-
-    global = false;
-
-    // NOTE: There is probably a better way to do this
-
-    // TODO - separate this out so it's only needed within the Clipping Geometry System. This is not useful being separate from that
-    // must do that before deletion
+export default class MRHyperlink extends MRTextEntity {
+    /**
+     * Constructor for the Model entity, does the default.
+     */
+    constructor() {
+        super();
+        this.background.castShadow = true;
+    }
 
     /**
-     * @class
-     * @description Constructor for the clipping geometry class. Sets the internal geometry object to the geometry that is passed through.
-     * @param {object} geometry - The geometry to be captured internally by `this.geometry`.
+     *
      */
-    constructor(geometry) {
-        this.geometry = geometry;
+    connected() {
+        super.connected();
+        this.link = document.createElement('a');
+        this.link.setAttribute('href', this.getAttribute('href'));
+
+        this.addEventListener('touch-start', () => {
+            this.classList.add('active');
+        });
+
+        this.addEventListener('click', () => {
+            this.link.click();
+        });
     }
 }
+
+customElements.get('mr-a') || customElements.define('mr-a', MRHyperlink);
 </code></pre>
         </article>
     </section>

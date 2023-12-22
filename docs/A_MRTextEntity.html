@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: datatypes/ClippingGeometry.js | mrjs Docs</title>
+    <title>Class: MRTextEntity | mrjs Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -43,39 +41,142 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @class ClippingGeometry
- * @classdesc Geometry used in the clipping plane step. Separated out for clarity in the calculations.
- */
-export class ClippingGeometry {
-    planes = [];
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="A.html">A</a>#</span>MRTextEntity<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-    planeIDs = [];
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-    intersection = false;
+<dt>
+    
+        <h4 class="name" id="MRTextEntity">
+            
+                new <span class="type-signature"></span>MRTextEntity<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="core_MRTextEntity.js.html">core/MRTextEntity.js</a></code>,
+                <code><a href="core_MRTextEntity.js.html#line19">line 19</a></code>
+            </div>
+            
+        </h4>
 
-    global = false;
+        
+    
+</dt>
+<dd>
 
-    // NOTE: There is probably a better way to do this
+    
+    <div class="description">
+        Constructor for the MRTextEntity object.
+             Sets up the 3D aspect of the text, including the object, texture, and update check.
+             Additionally, adds an event listener for the text to auto-augment whenever the panel size changes.
+    </div>
+    
 
-    // TODO - separate this out so it's only needed within the Clipping Geometry System. This is not useful being separate from that
-    // must do that before deletion
+    
 
-    /**
-     * @class
-     * @description Constructor for the clipping geometry class. Sets the internal geometry object to the geometry that is passed through.
-     * @param {object} geometry - The geometry to be captured internally by `this.geometry`.
-     */
-    constructor(geometry) {
-        this.geometry = geometry;
-    }
-}
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="MRTextEntity_MRTextEntity.html">MRTextEntity#MRTextEntity</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -92,7 +193,7 @@ export class ClippingGeometry {
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'A#MRTextEntity_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
