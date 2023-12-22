@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: utils/Math3D.js | mrjs Docs</title>
+    <title>Class: Button | mrjs Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -43,42 +41,135 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import * as THREE from 'three';
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="Button.html">Button</a>#</span>Button<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-/**
- * @namespace Math3D
- * @description Useful namespace for helping with Math3D and threejs utility functions
- */
-let Math3D = {};
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-/**
- * @function
- * @memberof Math3D
- * @description Computes the bounding sphere of an inputted three group object.
- * @param {THREE.group} group - the group to be enclosed in the bounding sphere.
- * @param {THREE.group} relativeTo - object that the group is relative to. For example if the group is an apple held in a
- * character's hand, relativeTo would be the characters hand. When left as null, the bounding sphere defaults to the inputted groups original world matrix.
- * @returns {THREE.Sphere} - the resolved bounding sphere
- */
-Math3D.computeBoundingSphere = function (group, relativeTo = null) {
-    let sphere = new THREE.Sphere();
-    let box = new THREE.Box3();
+<dt>
+    
+        <h4 class="name" id="Button">
+            
+                new <span class="type-signature"></span>Button<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="core_entities_Button.js.html">core/entities/Button.js</a></code>,
+                <code><a href="core_entities_Button.js.html#line13">line 13</a></code>
+            </div>
+            
+        </h4>
 
-    box.setFromObject(group);
-    box.getBoundingSphere(sphere);
+        
+    
+</dt>
+<dd>
 
-    sphere.applyMatrix4(relativeTo ? relativeTo.matrixWorld : group.matrixWorld);
+    
+    <div class="description">
+        Constructor for the Model entity, does the default.
+    </div>
+    
 
-    return sphere;
-};
+    
 
-export { Math3D };
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -95,7 +186,7 @@ export { Math3D };
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'Button#Button_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
