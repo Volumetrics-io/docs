@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: MRSystem | mrjs Docs</title>
+    <title>Source: core/MRHyperlink.js | mrjs Docs</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -41,227 +43,47 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="ClippingSystem.html">ClippingSystem</a>#</span>MRSystem<span class="signature">(useComponents, frameRate)</span><span class="type-signature"></span></h2>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-<dt>
-    
-        <h4 class="name" id="MRSystem">
-            
-                new <span class="type-signature"></span>MRSystem<span class="signature">(useComponents, frameRate)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="core_MRSystem.js.html">core/MRSystem.js</a></code>,
-                <code><a href="core_MRSystem.js.html#line18">line 18</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Constructor for MRSystem. Sets up appropriate document event listeners, component defaults, and system defaults that will be used for system runs ever frame.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>useComponents</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">Default to true. Determines whether comonents need to be maintained (attached/updated/detached) with the system.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>frameRate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">Default to null. When set, used and updated as part of the System's update function.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-    <dt class="inherited-from">Inherited From:</dt>
-    <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="MRSystem_MRSystem.html">MRSystem#MRSystem</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { MRTextEntity } from './MRTextEntity';
+
+/**
+ * @class A
+ * @classdesc 3D representation of a hyperlink. `mr-a`
+ * @augments MRDivEntity
+ */
+export default class MRHyperlink extends MRTextEntity {
+    /**
+     * Constructor for the Model entity, does the default.
+     */
+    constructor() {
+        super();
+        this.background.castShadow = true;
+    }
+
+    /**
+     *
+     */
+    connected() {
+        super.connected();
+        this.link = document.createElement('a');
+        this.link.setAttribute('href', this.getAttribute('href'));
+
+        this.addEventListener('touch-start', () => {
+            this.classList.add('active');
+        });
+
+        this.addEventListener('click', () => {
+            this.link.click();
+        });
+    }
+}
+
+customElements.get('mr-a') || customElements.define('mr-a', MRHyperlink);
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -278,7 +100,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'ClippingSystem#MRSystem_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
